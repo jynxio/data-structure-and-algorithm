@@ -31,16 +31,13 @@ module.exports = {
             {
                 test: /\.(glsl|vs|fs|vert|frag)$/i,
                 type: "asset/source",
-                generator: {
-                    filename: "assets/images/[hash][ext]",
-                }
             }
         ],
     },
     output: {
         filename: "index.js",
-        path: path.resolve( __dirname, "../../test" ), // TODO
-        clean: false,    // 清除生成目录。
+        path: path.resolve( __dirname, "../test" ),
+        clean: true,     // 清除生成目录。
         pathinfo: false, // 禁止为bundle生成模块的路径信息，以提高垃圾回收的性能，从而提高构建性能。
     },
 };
