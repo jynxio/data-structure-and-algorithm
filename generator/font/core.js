@@ -23,6 +23,9 @@ const UNICODE_ZH_400 = "./static/font/unicode/zh-400.txt";
 const UNICODE_ZH_700 = "./static/font/unicode/zh-700.txt";
 const UNICODE_CO_400 = "./static/font/unicode/co-400.txt";
 
+/**
+ * @returns { Promise } - Promise代表undefined。
+ */
 async function subset() {
 
     const question = `\nThe program will subset the default font files based on the .html files. Please enter the path to a .html file (eg ./a.html), or the path to a folder where the .html file is stored (eg ./test).\nPlease enter: `;
@@ -47,9 +50,13 @@ async function subset() {
 
 }
 
+/**
+ * @param { string } path - 一个.html文件的url。
+ * @returns { Promise } - Promise代表undefined。
+ */
 async function subsetBaseOnOneHtml( path ) {
 
-    console.log( `\nThe program will subset the default font files based on this files: ${ path }` );
+    console.log( `\nThe program will subset the default font files based on the unicode.txt files and this .html file: ${ path }.` );
 
     /* Confirm */
     {
@@ -82,7 +89,7 @@ async function subsetBaseOnOneHtml( path ) {
     /* en-700 */
     {
 
-        const response = await subsetCore( path, UNICODE_EN_700, ORIGIN_EN_700, SUBSET_EN_700, undefined );
+        const response = await subsetCore( path, UNICODE_EN_700, ORIGIN_EN_700, SUBSET_EN_700, [ "h1", "h2", "h3", "h4", "strong" ] );
 
         if ( ! response.success ) {
 
@@ -116,7 +123,7 @@ async function subsetBaseOnOneHtml( path ) {
     /* zh-700 */
     {
 
-        const response = await subsetCore( path, UNICODE_ZH_700, ORIGIN_ZH_700, SUBSET_ZH_700, undefined );
+        const response = await subsetCore( path, UNICODE_ZH_700, ORIGIN_ZH_700, SUBSET_ZH_700, [ "h1", "h2", "h3", "h4", "strong" ] );
 
         if ( ! response.success ) {
 
@@ -133,7 +140,7 @@ async function subsetBaseOnOneHtml( path ) {
     /* co-400 */
     {
 
-        const response = await subsetCore( path, UNICODE_CO_400, ORIGIN_CO_400, SUBSET_CO_400, undefined );
+        const response = await subsetCore( path, UNICODE_CO_400, ORIGIN_CO_400, SUBSET_CO_400, [ "code", "pre" ] );
 
         if ( ! response.success ) {
 
@@ -147,13 +154,146 @@ async function subsetBaseOnOneHtml( path ) {
 
     }
 
+    /* All done */
     console.log( "All done!" );
 
 }
 
+/**
+ * @param { string } path - 一个存储.html文件的文件夹的url。
+ * @returns { Promise } - Promise代表undefined。
+ */
 async function subsetBaseOnMultipleHtml( path ) {
 
     console.log( `\nThe program will subset the default font files based on the .html files in this folder: ${ path }` );
+
+    /* Confirm */
+    {
+
+        const question = "Are you sure? (y/n)\nPlease enter: "
+        const answer = readlineSync.question( question );
+        const is_confirm = answer === "y";
+
+        if ( ! is_confirm ) return;
+
+    }
+
+    /* Clear all unicode.txt files */
+    {
+
+        let is_success = true;
+
+        const responses = await Promise.all( [
+
+            fontcaster.write( "", UNICODE_EN_400 ),
+            fontcaster.write( "", UNICODE_EN_700 ),
+            fontcaster.write( "", UNICODE_ZH_400 ),
+            fontcaster.write( "", UNICODE_ZH_700 ),
+            fontcaster.write( "", UNICODE_CO_400 ),
+
+        ] );
+
+        responses.forEach( response => {
+
+            if ( response.success ) return;
+
+            is_success = false;
+
+            console.log( "Error: ", response.error );
+
+        } );
+
+        if ( ! is_success ) return;
+
+    }
+
+    /* en-400 */
+    {
+
+        const response = await subsetCore( path, UNICODE_EN_400, ORIGIN_EN_400, SUBSET_EN_400, undefined );
+
+        if ( ! response.success ) {
+
+            console.error( "Error: ", response.error );
+
+            return;
+
+        }
+
+        console.log( "Done: en-400" );
+
+    }
+
+    /* en-700 */
+    {
+
+        const response = await subsetCore( path, UNICODE_EN_700, ORIGIN_EN_700, SUBSET_EN_700, [ "h1", "h2", "h3", "h4", "strong" ] );
+
+        if ( ! response.success ) {
+
+            console.error( "Error: ", response.error );
+
+            return;
+
+        }
+
+        console.log( "Done: en-700" );
+
+    }
+
+    /* zh-400 */
+    {
+
+        const response = await subsetCore( path, UNICODE_ZH_400, ORIGIN_ZH_400, SUBSET_ZH_400, undefined );
+
+        if ( ! response.success ) {
+
+            console.error( "Error: ", response.error );
+
+            return;
+
+        }
+
+        console.log( "Done: zh-400" );
+
+    }
+
+    /* zh-700 */
+    {
+
+        const response = await subsetCore( path, UNICODE_ZH_700, ORIGIN_ZH_700, SUBSET_ZH_700, [ "h1", "h2", "h3", "h4", "strong" ] );
+
+        if ( ! response.success ) {
+
+            console.error( "Error: ", response.error );
+
+            return;
+
+        }
+
+        console.log( "Done: zh-700" );
+
+    }
+
+    /* co-400 */
+    {
+
+        const response = await subsetCore( path, UNICODE_CO_400, ORIGIN_CO_400, SUBSET_CO_400, [ "code", "pre" ] );
+
+        if ( ! response.success ) {
+
+            console.error( "Error: ", response.error );
+
+            return;
+
+        }
+
+        console.log( "Done: co-400" );
+
+    }
+
+    /* All done */
+    console.log( "All done!" );
 
 }
 
