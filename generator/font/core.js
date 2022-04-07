@@ -24,7 +24,7 @@ const UNICODE_ZH_700 = "./static/font/unicode/zh-700.txt";
 const UNICODE_CO_400 = "./static/font/unicode/co-400.txt";
 
 /**
- * 询问html文件的路径并自动执行字体子集化，若路径指向单个html文件，则调用subsetBaseOnOneHtml，若路径指向一个文件夹，
+ * （异步）询问html文件的路径并自动执行字体子集化，若路径指向单个html文件，则调用subsetBaseOnOneHtml，若路径指向一个文件夹，
  * 则调用subsetBaseOnMultipleHtml。
  * @returns { Promise } - Promise代表undefined。
  */
@@ -53,9 +53,9 @@ async function subset() {
 }
 
 /**
- * 基于一个html文件（来自path）和多个unicode.txt文件（来自UNICODE_X_X）来子集化预设的字体文件（来自ORIGIN_X_X），
- * 生成的字体文件将存储在预设路径下（指SUBSET_X_X），子集化的字符将以unicode数组的形式覆写入unicode.txt中，该函数不
- * 改变原始的字体文件，该函数仅供subset函数调用。
+ * （异步）基于一个html文件（来自path）和多个unicode.txt文件（来自UNICODE_X_X）来子集化预设的字体文件（来自ORIGIN_X_X），
+ * 生成的字体文件将存储在预设路径下（指SUBSET_X_X），子集化的字符将以unicode数组的形式覆写入unicode.txt中，该函数不修改原始
+ * 的字体文件，该函数仅供subset函数调用。
  * @param { string } path - 一个.html文件的url。
  * @returns { Promise } - Promise代表undefined。
  */
@@ -165,9 +165,9 @@ async function subsetBaseOnOneHtml( path ) {
 }
 
 /**
- * 基于多个html文件（来自path文件夹）来子集化预设的字体文件（来自ORIGIN_X_X），生成的字体文件将存储在预设路径下（只SUBSET_X_X），
- * 子集化的字符将以unicode数组的形式覆写入unicode.txt中（来自UNICODE_X_X），但unicode.txt的内容不会参与子集化，该函数不改变原
- * 始的字体文件，该函数仅供subset函数调用。
+ * （异步）基于多个html文件（来自path文件夹）来子集化预设的字体文件（来自ORIGIN_X_X），生成的字体文件将存储在预设路径下（只SUBSET_X_X），
+ * 字符将以unicode数组的形式覆写入unicode.txt中（来自UNICODE_X_X），但unicode.txt的内容不会参与子集化，该函数不修改原子集化的始的字体
+ * 文件，该函数仅供subset函数调用。
  * @param { string } path - 一个存储.html文件的文件夹的url。
  * @returns { Promise } - Promise代表undefined。
  */

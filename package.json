@@ -2,9 +2,13 @@
     "private": true,
     "devDependencies": {
         "font-caster": "^0.1.5",
-        "readline-sync": "^1.4.10"
+        "js-beautify": "^1.14.2",
+        "marked": "^4.0.12",
+        "readline-sync": "^1.4.10",
+        "uuid": "^8.3.2"
     },
     "scripts": {
-        "subset": "node ./generator/font/index.js"
+        "subset": "node ./generator/font/index.js",
+        "translate": "node ./generator/article/index.js"
     }
 }
