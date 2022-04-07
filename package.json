@@ -1,16 +1,10 @@
 {
-    "scripts": {
-        "start": "webpack serve --config ./bundler/webpack.dev.js",
-        "build": "webpack --config ./bundler/webpack.prod.js"
-    },
+    "private": true,
     "devDependencies": {
-        "css-loader": "^6.5.1",
-        "css-minimizer-webpack-plugin": "^3.3.1",
-        "html-webpack-plugin": "^5.5.0",
-        "style-loader": "^3.3.1",
-        "webpack": "^5.66.0",
-        "webpack-cli": "^4.9.1",
-        "webpack-dev-server": "^4.7.3",
-        "webpack-merge": "^5.8.0"
+        "font-caster": "^0.1.5",
+        "readline-sync": "^1.4.10"
+    },
+    "scripts": {
+        "subset": "node ./generator/font/index.js"
     }
 }
