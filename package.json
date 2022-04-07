@@ -1,14 +1,28 @@
 {
     "private": true,
     "devDependencies": {
+        "css-loader": "^6.7.1",
+        "css-minimizer-webpack-plugin": "^3.4.1",
         "font-caster": "^0.1.5",
+        "html-webpack-plugin": "^5.5.0",
         "js-beautify": "^1.14.2",
         "marked": "^4.0.12",
+        "mini-css-extract-plugin": "^2.6.0",
         "readline-sync": "^1.4.10",
-        "uuid": "^8.3.2"
+        "style-loader": "^3.3.1",
+        "uuid": "^8.3.2",
+        "webpack": "^5.72.0",
+        "webpack-cli": "^4.9.2",
+        "webpack-dev-server": "^4.8.1",
+        "webpack-merge": "^5.8.0"
     },
     "scripts": {
         "subset": "node ./generator/font/index.js",
-        "translate": "node ./generator/article/index.js"
+        "translate": "node ./generator/article/index.js",
+        "build": "webpack --config ./bundler/webpack-prod.js",
+        "start": "webpack server --config ./bundler/webpack-dev.js"
+    },
+    "dependencies": {
+        "three": "^0.139.2"
     }
 }
