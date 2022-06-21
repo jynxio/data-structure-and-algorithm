@@ -6,5 +6,5 @@
 
 ## License
 
-MIT
+本项目遵循 [MIT](https://github.com/jynxio/leetcode-everyday/blob/main/LICENSE) 协议。
 
