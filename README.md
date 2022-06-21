@@ -1,6 +1,9 @@
 ## LeetCode Everyday
 
-本项目用于记录每天学习算法与数据结构的过程。
+本项目用于存储数据结构与算法的实现代码。
+
+## Content
+- [链表](https://github.com/jynxio/leetcode-everyday/blob/main/linked-list.js)
 
 <br />
 
