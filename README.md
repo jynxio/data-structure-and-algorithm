@@ -1,4 +1,4 @@
-## LeetCode Everyday
+## data structure and algorithm
 
 本项目用于存储数据结构与算法的实现代码。
 
