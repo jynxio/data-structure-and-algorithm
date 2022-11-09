@@ -3,7 +3,8 @@
 本项目用于存储数据结构与算法的实现代码。
 
 ## Content
-- [链表](https://github.com/jynxio/leetcode-everyday/blob/main/linked-list.js)
+- [链表](https://github.com/jynxio/data-structure-and-algorithm/blob/main/LinkedList.js)
+- [二叉搜索树 & AVL树](https://github.com/jynxio/data-structure-and-algorithm/blob/main/Tree.js)
 
 <br />
 
