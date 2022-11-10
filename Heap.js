@@ -26,6 +26,53 @@ class MinHeap {
     }
 
     /**
+     * 获取最小值。
+     * @returns { number | undefined } - 若堆为空，则返回undefined，否则返回最小值。
+     * @example
+     * f(); // return minimum或undefined
+     */
+    getMinimum () {
+
+        if ( !this.#heap.length ) return;
+
+        return this.#heap[ 0 ];
+
+    }
+
+    /**
+     * 剔除最小值。
+     * @returns { Object } - 返回实例本身。
+     * @example
+     * f(); // return 实例本身
+     */
+    removeMinimum () {
+
+        if ( this.#heap.length === 0 ) return this;
+
+        if ( this.#heap.length === 1 ) {
+
+            this.#heap.length = 0;
+
+            return this;
+
+        }
+
+        [ this.#heap[ 0 ], this.#heap[ this.#heap.length - 1 ] ] = [ this.#heap[ this.#heap.length - 1 ], this.#heap[ 0 ] ];
+
+        this.#heap.length--;
+        this.#shiftDown( 0 );
+
+        return this;
+
+    }
+
+    printLength () {
+
+        console.log( this.#heap.length );
+
+    }
+
+    /**
      * 用树结构来打印堆实例。
      * @example
      * f(); // return undefined
@@ -72,6 +119,76 @@ class MinHeap {
         [ this.#heap[ index ], this.#heap[ parent_index ] ] = [ this.#heap[ parent_index ], this.#heap[ index ] ];
 
         this.#shiftUp( parent_index );
+
+    }
+
+    #shiftDown ( index ) {
+
+        const left_child_index = this.#getLeftChildIndex( index );
+        const right_child_index = this.#getRightChildIndex( index );
+
+        /* 基线条件: 既没有左节点，又没有右节点 */
+        if ( left_child_index === undefined && right_child_index === undefined ) {
+
+            return;
+
+        }
+
+        if ( right_child_index === undefined ) {
+
+            /* 基线条件: 只有左节点，且当前节点的值小于等于左节点的值 */
+            if ( this.#heap[ index ] <= this.#heap[ left_child_index ] ) return;
+
+            [ this.#heap[ index ], this.#heap[ left_child_index ] ] = [ this.#heap[ left_child_index ], this.#heap[ index ] ];
+
+            return this.#shiftDown( left_child_index );
+
+        }
+
+        if ( left_child_index === undefined ) {
+
+            /* 基线条件: 只有右节点，且当前节点的值小于等有右节点的值 */
+            if ( this.#heap[ index ] <= this.#heap[ right_child_index ] ) return;
+
+            [ this.#heap[ index ], this.#heap[ right_child_index ] ] = [ this.#heap[ right_child_index ], this.#heap[ index ] ];
+
+            return this.#shiftDown( right_child_index );
+
+        }
+
+        /* 基线条件: 有左节点和右节点，且当前节点的值小于等于左节点的值，且当前节点的值小于等于右节点的值 */
+        if (
+            this.#heap[ index ] <= this.#heap[ left_child_index ]
+            &&
+            this.#heap[ index ] <= this.#heap[ right_child_index ]
+        ) return;
+
+        /* 基线条件: 有左节点和右节点，且当前节点的值大于左节点的值，且当前节点的值小于等于右节点的值 */
+        if ( this.#heap[ index ] <= this.#heap[ right_child_index ] ) {
+
+            [ this.#heap[ index ], this.#heap[ left_child_index ] ] = [ this.#heap[ left_child_index ], this.#heap[ index ] ];
+
+            return this.#shiftDown( left_child_index );
+
+        }
+
+        /* 基线条件: 有左节点和右节点，且当前节点的值小于等于左节点的值，且当前节点的值大于右节点的值 */
+        if ( this.#heap[ index ] <= this.#heap[ left_child_index ] ) {
+
+            [ this.#heap[ index ], this.#heap[ right_child_index ] ] = [ this.#heap[ right_child_index ], this.#heap[ index ] ];
+
+            return this.#shiftDown( right_child_index );
+
+        }
+
+        /* 基线条件: 有左节点和右节点，且当前节点的值大于左节点的值，且当前节点的值大于右节点的值 */
+        const smaller_index = this.#heap[ left_child_index ] <= this.#heap[ right_child_index ]
+            ? left_child_index
+            : right_child_index;
+
+        [ this.#heap[ index ], this.#heap[ smaller_index ] ] = [ this.#heap[ smaller_index ], this.#heap[ index ] ];
+
+        return this.#shiftDown( smaller_index );
 
     }
 
