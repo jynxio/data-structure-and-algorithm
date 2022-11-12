@@ -1,6 +1,53 @@
-// TODO 未完成
-// TODO 未完成
-// TODO 未完成
+// TODO - 待优化
+
+// ---------------------------------------------------------------------------------------
+// 灵感:
+//   - https://www.cnblogs.com/shizhh/p/5746151.html
+//   - http://www.moye.me/2018/06/29/dynamic-median-in-golang/
+// ---------------------------------------------------------------------------------------
+
+/**
+ * 计算中位数。
+ * @param { Array[number] } data - 存储数字值的一维数组。
+ * @returns { number | undefined } - 若data为空，则返回undefined，否则返回中位数。
+ * @example
+ * f( [ 3, 1, 3 ] );    // return 2
+ * f( [ 4, 1, 3, 2 ] ); // return 2.5
+ */
+export default function ( data ) {
+
+    const data_length = data.length;
+
+    /* 若元素个数为零 */
+    if ( data_length === 0 ) return;
+
+    const parity = data_length % 2 === 0 ? "odd" : "even";
+
+    const heap = new MinHeap();
+    const heap_count = Math.floor( data_length / 2 ) + 1;
+
+    for ( let i = 0; i < heap_count; i++ ) heap.insert( data[ i ] );
+    for ( let i = heap_count; i < data_length; i++ ) {
+
+        const minimum = heap.getMinimum();
+
+        if ( minimum >= data[ i ] ) continue;
+
+        heap.shift();
+        heap.insert( data[ i ] );
+
+    }
+
+    /* 若元素个数为奇 */
+    if ( parity === "odd" ) return heap.getMinimum();
+
+    /* 若元素个数为偶 */
+    const minimum = heap.getMinimum();
+    const second_minimum = heap.getSecondMinimum();
+
+    return ( minimum + second_minimum ) / 2;
+
+}
 
 class MinHeap {
 
@@ -44,6 +91,19 @@ class MinHeap {
     }
 
     /**
+     * 获取堆的次小值。
+     * @returns { number | undefined } - 若不存在次小值，则返回undefined，否则返回次小值。
+     * @example
+     * f(); // return 次小值或undefined
+     */
+    getSecondMinimum () {
+
+        if ( this.#heap.length === 2 ) return this.#heap[ 1 ];
+        if ( this.#heap.length === 3 ) return Math.min( this.#heap[ 1 ], this.#heap[ 2 ] );
+
+    }
+
+    /**
      * 移除堆的第一个节点（即最小值节点）。
      * @returns { Object } - 返回实例本身。
      * @example
@@ -65,6 +125,12 @@ class MinHeap {
         this.#shiftDown( 0 );
 
         return this;
+
+    }
+
+    printLength () {
+
+        console.log( this.#heap.length );
 
     }
 
