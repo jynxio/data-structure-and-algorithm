@@ -19,7 +19,7 @@
   - 最大堆
 
 #### 算法
-- [中位数算法](https://github.com/jynxio/data-structure-and-algorithm/blob/main/calculateMedian.js)
+- [中位数算法（基于最小堆） - `O(nlogn)`](https://github.com/jynxio/data-structure-and-algorithm/blob/main/calculateMedian.js)
 
 <br />
 
