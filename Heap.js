@@ -207,76 +207,30 @@ class BaseHeap {
      * （内部方法）下移节点，通过向下移动节点来使堆保持正确。
      * @param { number } index - 待下移的节点的index。
      */
-    _shiftDown ( index ) {
+    _shiftDown( index ) {
+
+        let largest_node_index = index;
 
         const left_child_index = this._getLeftChildIndex( index );
         const right_child_index = this._getRightChildIndex( index );
 
-        /* 情况1：既没有左子节点，又没有右子节点 */
-        /* 基线条件：既没有左子节点，又没有右子节点 */
-        if ( left_child_index === - 1 && right_child_index === - 1 ) return;
+        left_child_index !== - 1
+        &&
+        this._compare( this._heap[ left_child_index ], this._heap[ largest_node_index ] )
+        &&
+        ( largest_node_index = left_child_index );
 
-        /* 情况2：只有左子节点 */
-        if ( right_child_index === - 1 ) {
+        right_child_index !== - 1
+        &&
+        this._compare( this._heap[ right_child_index ], this._heap[ largest_node_index ] )
+        &&
+        ( largest_node_index = right_child_index );
 
-            /* 基线条件：对于最小堆而言，是左子节点的值不小于当前节点的值。对于最大堆而言，是左子节点不大于当前节点的值。 */
-            if ( ! this._compare( this._heap[ left_child_index ], this._heap[ index ] ) ) return;
+        /* 基线条件 */
+        if ( largest_node_index === index ) return;
 
-            this._swap( index, left_child_index );
-            this._shiftDown( left_child_index );
-
-            return;
-
-        }
-
-        /* 情况3：只有右子节点 */
-        if ( left_child_index === - 1 ) {
-
-            /* 基线条件：对于最小堆而言，是右子节点的值不小于当前节点的值。对于最大堆而言，是右子节点的值不大于当前节点的值。 */
-            if ( ! this._compare( this._heap[ right_child_index ], this._heap[ index ] ) ) return;
-
-            this._swap( index, right_child_index );
-            this._shiftDown( right_child_index );
-
-            return;
-
-        }
-
-        /* 情况4: 既有左子节点，又有右子节点 */
-        /* 基线条件：对于最小堆而言，是左右子节点的值都不小于当前节点的值。对于最大堆而言，是左右子节点的值都不大于当前节点的值。 */
-        if (
-            ! this._compare( this._heap[ left_child_index ], this._heap[ index ] )
-            &&
-            ! this._compare( this._heap[ right_child_index ], this._heap[ index ] )
-        ) return;
-
-        /* 情况4-1：对于最小堆而言，是左子节点的值小于当前节点的值。对于最大堆而言，是左子节点的值大于当前节点的值。 */
-        if ( ! this._compare( this._heap[ right_child_index ], this._heap[ index ] ) ) {
-
-            this._swap( index, left_child_index );
-            this._shiftDown( left_child_index );
-
-            return;
-
-        }
-
-        /* 情况4-2：对于最小堆而言，是右子节点的值小于当前节点的值。对于最大堆而言，是右子节点的值大于当前节点的值。 */
-        if ( ! this._compare( this._heap[ left_child_index ], this._heap[ index ] ) ) {
-
-            this._swap( index, right_child_index );
-            this._shiftDown( right_child_index );
-
-            return;
-
-        }
-
-        /* 情况4-3：对于最小堆而言，是左右子节点的值都小于当前节点的值。对于最大堆而言，是左右子节点的值都大于当前节点的值。 */
-        const candidate_index = this._compare( this._heap[ left_child_index ], this._heap[ right_child_index ] )
-            ? left_child_index
-            : right_child_index;
-
-        this._swap( index, candidate_index );
-        this._shiftDown( candidate_index );
+        this._swap( index, largest_node_index );
+        this._shiftDown( largest_node_index );
 
     }
 
