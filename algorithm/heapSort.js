@@ -10,7 +10,7 @@ import { MinHeap } from "../data-structure/Heap.js";
 export default function heapSort ( data ) {
 
     /*  */
-    const min_heap = new MinHeap;
+    const min_heap = new MinHeap();
 
     data.forEach( number => min_heap.insert( number ) )
 
