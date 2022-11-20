@@ -78,7 +78,7 @@ class BaseHeap {
      * 获取堆的极值（即第一个节点的值）。
      * @returns { number } - 对于最小堆而言，是最小值。对于最大堆而言，是最大值。
      */
-    getExtremum () {
+    _getExtremum () {
 
         if ( this.getCount() === 0 ) throw new Error( "获取失败：因为该堆为空。" );
 
@@ -254,7 +254,7 @@ export class MinHeap extends BaseHeap {
      */
     getMinimum () {
 
-        return this.getExtremum();
+        return this._getExtremum();
 
     }
 
@@ -278,7 +278,7 @@ export class MaxHeap extends BaseHeap {
      */
     getMaximum () {
 
-        return this.getExtremum();
+        return this._getExtremum();
 
     }
 
