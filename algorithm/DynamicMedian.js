@@ -4,11 +4,7 @@
 //     就是当你第一次获取一个无序数组的中位数时，该操作的时间复杂度为O(nlogn)，而当你向该无序数
 //     组新增一个数字值，并再次获取该无序数组的中位数时，该操作的时间复杂度为O(logn)。
 // 示例:
-//     const dynamic_median = new DynamicMedian();
-//     dynamic_median.setData( [ 3, 1, 5 ] ); // retutn dynamic_median - O(nlogn)
-//     dynamic_median.getMedian();            // return 3              - O(1)
-//     dynamic_median.insertNumber( 4 );      // return dynamic_median - O(logn)
-//     dynamic_median.getMedian();            // return 3.5            - O(1)
+//     详见constructor的example。
 // 参考:
 //   - https://www.cnblogs.com/shizhh/p/5746151.html
 //   - http://www.moye.me/2018/06/29/dynamic-median-in-golang/
@@ -24,6 +20,12 @@ export default class DynamicMedian {
 
     /**
      * 动态中位数的类，用于计算动态无序数组的中位数，该算法不会改变原始数据。
+     * @example
+     * const f = new F();
+     * f.setData( [ 3, 1, 5 ] ); // retutn f   - O(nlogn)
+     * f.getMedian();            // return 3   - O(1)
+     * f.insertNumber( 4 );      // return f   - O(logn)
+     * f.getMedian();            // return 3.5 - O(1)
      */
     constructor () {}
 
